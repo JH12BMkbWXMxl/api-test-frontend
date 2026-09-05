@@ -40,6 +40,8 @@
 
         timeStart = Date.now()
 
+        //  
+
         try {
           // 3. Отправляем данные и ждем ответ
 
@@ -126,9 +128,10 @@
 
       },
       // Minimum delay between reconnect attempts in milliseconds (default: 500)
-      minReconnectDelay: 500,
+     // minReconnectDelay: 500,
       // Maximum delay between reconnect attempts in milliseconds (default: 20000)
-      maxReconnectDelay: 5000,
+      maxReconnectDelay: 10000,
+      timeout: 15000 
     });
     
 
@@ -174,11 +177,26 @@
         data = JSON.stringify(parametrs)
       }
 
+
+      data = JSON.parse(data);
+
+      data.idempotency_key = '123455'
+
+      data = JSON.stringify(data)
+
+      data
+
       try {
         // 3. Отправляем данные и ждем ответ
 
         const response = await centrifuge.rpc('data', data);
         // const response = await centrifuge.rpc('data', JSON.stringify(parametrs));
+
+        message = response.data.message
+
+        if (message.length === 0) {
+          return
+        }
 
         if (parametrs.actionApi == 'testerAPI/savePattern') {
           getListPatterns(response)
