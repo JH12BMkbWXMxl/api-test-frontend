@@ -206,6 +206,8 @@
           $("#receivedTextArea").val(JSON.stringify(response));
         } else {
           $("#receivedTextArea").val(JSON.stringify(response));
+
+          $("#beatyJson").html(JSON.stringify(response, null, 2));
         }
 
 
@@ -327,6 +329,8 @@
         <br>
         <button onclick="sendText()">SendText</button> </div> 
       <div class="pure-u-1-1"> <textarea style="width: 98%; height: 232px;" id="receivedTextArea"></textarea> </div> 
+
+      <pre id="beatyJson"></pre>
     </div>
     <div class="pure-u-1-2 scroll-box"> 
       <div id="pattern-list"></div> 
