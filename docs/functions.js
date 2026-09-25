@@ -8,7 +8,9 @@ function getListPatterns(response) {
         value;
 
         var newField =
-            '<tr><td><div onclick="pastePattern(' +
+            '<tr class="pattern-row" id="pattern-id-' +
+            value.id +
+            '"><td><div  onclick="pastePattern(' +
             value.id +
             ", '" +
             value.titleName +
@@ -51,7 +53,39 @@ function pastePattern(id, title) {
             '">|<textarea type="text" name="valuem">' +
             value +
             '</textarea> <button type="button" class="remove-field">Удалить</button></div>';
+
+        var newField = `                    
+        <div style="margin-bottom: 10px;" class="field-row pure-g margins-block">
+            <input name="parametr" class="pure-u-1-4" id="endpoint-name1" placeholder="parametr" value="${key}"  type="text"  />
+            <textarea name="valuem" style="margin-left: 5px;" class="pure-u-1-2">${value}</textarea>
+
+            <button style="margin-left: 5px;" class="pure-u-1-5 pure-button pure-button-primary remove-field"  type="submit">Удалить</button>
+        </div>`;
         $("#fields-container").append(newField);
+    }
+
+    // Вставить в топ лист
+    isPaste = true;
+    $("#pattern-top-list .pattern-row").each(function (index, element) {
+        // 'index' — это порядковый номер элемента (начиная с 0)
+        // 'element' (или 'this') — это текущий DOM-элемент в цикле
+
+        // Пример: получить HTML-содержимое каждого ряда
+        var content = $(this).html();
+        var elementId = $(this).attr("id");
+
+        idPattern = elementId.replace("pattern-id-", "");
+
+        if (idPattern == id) {
+            isPaste = false;
+        }
+    });
+
+    if (isPaste === true) {
+        paternId = $(`#pattern-id-${id}`).prop("outerHTML");
+        $("#pattern-top-list").append(paternId);
+
+        localStorage.setItem("pattern", "Иван");
     }
 }
 
