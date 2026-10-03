@@ -61,6 +61,8 @@
     }
 
     const container = document.getElementById('counter');
+	
+	ipS = '194.76.173.196:18443'
 
     const isLocal = 
       
@@ -75,7 +77,8 @@
     } else {
 
         wsData = "wss://"+ getIP() +"/connection/websocket"
-        httData = 'https://'+ getIP() +'/http'
+        httData = 'https://'+ ipS +'/http'
+        //httData = 'https://'+ getIP() +'/http'
     }
 
     const centrifuge = new Centrifuge(wsData, {
