@@ -11,6 +11,17 @@ $(document).ready(function () {
         $("#fields-container").append(newField);
     });
 
+    $("#add-field-2").click(function () {
+        var newField = `                    
+        <div style="margin-bottom: 10px;" class="field-row-2 pure-g margins-block">
+            <input name="parametr" class="pure-u-1-4" id="endpoint-name1" placeholder="parametr"  type="text"  />
+            <textarea name="valuem" style="margin-left: 5px;" class="pure-u-1-2" placeholder="value" id="endpoint-name-value1"  type="text" /></textarea>
+
+            <button style="margin-left: 5px;" class="pure-u-1-5 pure-button pure-button-primary remove-field"  type="submit">Удалить</button>
+        </div>`;
+        $("#fields-container-2").append(newField);
+    });
+
     $("#save-endpoint").click(function () {
         nameEndPoint = $("#endpoint-save-name")[0];
         if (nameEndPoint.value == "") {
@@ -24,6 +35,27 @@ $(document).ready(function () {
 
         parametrs = {
             actionApi: "testerAPI/savePattern",
+            patternTitle: nameEndPoint.value,
+            patternText: JSON.stringify(apiPattern),
+            password: $("#testerKeyCode").val(),
+        };
+
+        sendText(parametrs);
+    });
+
+    $("#save-endpoint-2").click(function () {
+        nameEndPoint = $("#endpoint-save-name")[0];
+        if (nameEndPoint.value == "") {
+            alert("empty name endpoint");
+            return;
+        }
+
+        apiConfig = $("#api-config-2")[0].innerHTML;
+
+        apiPattern = getApiPatternDescription();
+
+        parametrs = {
+            actionApi: "testerAPI/savePatternDescription",
             patternTitle: nameEndPoint.value,
             patternText: JSON.stringify(apiPattern),
             password: $("#testerKeyCode").val(),
@@ -49,6 +81,9 @@ $(document).ready(function () {
     // Удаление поля (используем делегирование событий, так как кнопка создана динамически)
     $("#fields-container").on("click", ".remove-field", function () {
         $(this).parent(".field-row").remove();
+    });
+    $("#fields-container-2").on("click", ".remove-field-2", function () {
+        $(this).parent(".field-row-2").remove();
     });
 });
 
@@ -87,4 +122,24 @@ function sendT() {
         // Если произошла ошибка
         console.error("Ошибка отправки:", error);
     });
+}
+
+function saveResultText() {
+    nameEndPoint = $("#endpoint-save-name")[0].value;
+    nameNameValue = $("#endpoint-name-value")[0].value;
+    if (nameEndPoint.value == "") {
+        alert("empty name endpoint");
+        return;
+    }
+
+    resultExampleTextArea = $("#resultExampleTextArea")[0].value;
+
+    parametrs = {
+        actionApi: "testerAPI/savePatternResult",
+        patternTitle: nameNameValue + "$" + nameEndPoint,
+        patternText: resultExampleTextArea,
+        password: $("#testerKeyCode").val(),
+    };
+
+    sendText(parametrs);
 }
