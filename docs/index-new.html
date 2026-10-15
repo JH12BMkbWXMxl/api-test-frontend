@@ -171,52 +171,59 @@
 
         async function sendText(parametrs = '') {
 
-        data = $("#sendTextarea")[0].value
-
-        if (parametrs != '') {
-            data = JSON.stringify(parametrs)
-        }
-
-
-        data = JSON.parse(data);
-
-        data.idempotency_key = '123455'
-
-        data = JSON.stringify(data)
-
-        data
-
-        try {
-            // 3. Отправляем данные и ждем ответ
-
-            const response = await centrifuge.rpc('data', data);
-            // const response = await centrifuge.rpc('data', JSON.stringify(parametrs));
-
-            message = response.data.message
-
-            if (message.length === 0) {
-            return
+            if (parametrs == '') {
+                return ;
             }
 
-            if (parametrs.actionApi == 'testerAPI/savePattern') {
-            getListPatterns(response)
-            $("#receivedTextArea").val(JSON.stringify(response));
-            } else if (parametrs.actionApi == 'testerAPI/getPatterns') {
-            getListPatterns(response)
-            $("#receivedTextArea").val(JSON.stringify(response));
-            } else {
-            $("#receivedTextArea").val(JSON.stringify(response));
+            if (parametrs == 'send') {
+                data = $("#sendTextarea")[0].value
+            }
 
-            $("#beatyJson").html(JSON.stringify(response, null, 2));
+            if (parametrs != '') {
+                data = JSON.stringify(parametrs)
             }
 
 
-            console.log('Ответ от сервера:', response);
-        } catch (err) {
-            console.error('Ошибка при отправке RPC:', err);
+            data = JSON.parse(data);
 
-            sendText()
-        }
+            data.idempotency_key = '123455'
+
+            data = JSON.stringify(data)
+
+            data
+
+            try {
+                // 3. Отправляем данные и ждем ответ
+
+                const response = await centrifuge.rpc('data', data);
+                // const response = await centrifuge.rpc('data', JSON.stringify(parametrs));
+
+                message = response.data.message
+
+                if (message.length === 0) {
+                return
+                }
+
+                if (parametrs.actionApi == 'testerAPI/savePattern') {
+                    $("#receivedTextArea").val(JSON.stringify(response));
+                    getListPatterns(response)
+                    
+                } else if (parametrs.actionApi == 'testerAPI/getPatterns') {
+                    getListPatterns(response)
+                    $("#receivedTextArea").val(JSON.stringify(response));
+                } else {
+                    $("#receivedTextArea").val(JSON.stringify(response));
+
+                    $("#beatyJson").html(JSON.stringify(response, null, 2));
+                }
+
+
+                console.log('Ответ от сервера:', response);
+            } catch (err) {
+                console.error('Ошибка при отправке RPC:', err);
+
+                sendText()
+            }
         }
 
 
@@ -281,7 +288,7 @@
 
                 <div style="margin-bottom: 10px;" class="pure-g margins-block">
                     <textarea id="sendTextarea" style="margin-left: 5px; height: 200px;" class="pure-u-1-1" type="text" /></textarea>
-                    <button style="margin-left: " onclick="sendText()" class="pure-u-1-4 pure-button pure-button-primary remove-field"  type="submit">Send text</button>
+                    <button style="margin-left: " onclick="sendText('send')" class="pure-u-1-4 pure-button pure-button-primary remove-field"  type="submit">Send text</button>
                 </div>
 
                 <hr>

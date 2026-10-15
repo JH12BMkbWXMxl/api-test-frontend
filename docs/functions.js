@@ -49,6 +49,9 @@ function pastePattern(id, title) {
     $("#endpoint-name-value")[0].value = patternList.actionApi;
     $("#endpoint-save-name")[0].value = title;
 
+    $("#resultExampleTextArea").val("-");
+    $("#resultText").html("<pre>-<pre>");
+
     for (const [key, value] of Object.entries(patternList)) {
         var newField = `                    
         <div style="margin-bottom: 10px;" class="field-row pure-g margins-block">
