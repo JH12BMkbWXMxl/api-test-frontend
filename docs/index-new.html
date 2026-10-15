@@ -177,9 +177,7 @@
 
             if (parametrs == 'send') {
                 data = $("#sendTextarea")[0].value
-            }
-
-            if (parametrs != '') {
+            } else if (parametrs != '') {
                 data = JSON.stringify(parametrs)
             }
 
