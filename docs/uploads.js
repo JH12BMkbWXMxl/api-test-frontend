@@ -58,8 +58,10 @@ document.getElementById("uploadForm").addEventListener("submit", async function 
             document.getElementById("uploadForm").reset();
             document.getElementById("file-name-preview").textContent = "Файл не выбран";
         } else {
+            // receivedTextArea
+            $("#sendTextarea").val(JSON.stringify(result));
             // Сервер вернул ошибку (например, запрещенный формат файла в .rr.yaml)
-            alert(`Ошибка сервера: ${result.error || "Что-то пошло не так"}`);
+            // alert(`Ошибка сервера: ${result.error || "Что-то пошло не так"}`);
         }
     } catch (error) {
         // Ошибка сети или сервер выключен
