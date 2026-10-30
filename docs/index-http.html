@@ -91,6 +91,9 @@
                     changelogState(' > /http/centrifugo/connection_token ->  error ->'+ response.status)
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+            } catch (error) {
+            // Этот блок ОБЯЗАТЕЛЕН. Он перехватит ошибки сети или ошибку из throw new Error выше
+            console.error('Произошла ошибка при выполнении запроса:', error);
             }
 
             
