@@ -41,7 +41,7 @@ document.getElementById("uploadForm").addEventListener("submit", async function 
     try {
         // Шаг 3: Асинхронно отправляем файл на ваш сервер RoadRunner
         // Вручную указывать заголовок Content-Type НЕ НАДО, браузер сделает это сам
-        const response = await fetch("/http", {
+        const response = await fetch(httData, {
             method: "POST",
             body: formData,
         });
